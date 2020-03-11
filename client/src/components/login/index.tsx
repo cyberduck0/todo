@@ -6,8 +6,8 @@ import './login.scss'
 
 export default class LoginComponent extends Component {
   state = {
-    email: '',
-    password: '',
+    email: 'dude@gmail.com',
+    password: '1234',
   }
 
   checkEmail() {
@@ -35,9 +35,11 @@ export default class LoginComponent extends Component {
                 }}>
                 <TextField
                   onChange={val => this.setState({ email: val.target.value })}
+                  value={this.state.email}
                   label='Email'></TextField>
                 <TextField
                   type='password'
+                  value={this.state.password}
                   onChange={val =>
                     this.setState({ password: val.target.value })
                   }
