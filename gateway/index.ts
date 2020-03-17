@@ -39,10 +39,15 @@ import { MockTodoService } from './src/service/mock-todo-service';
                 const items = await todoService.listTodoItems([id]);
                 return serTodo(todo, items);
             },
-            todos: async () => {
-                const todos = await todoService.listTodos();
-                const items = await todoService.listTodoItems(todos.map(t => t.id));
-                return todos.map(todo => serTodo(todo, items.filter(item => item.todoId == todo.id)));
+            todos: async (_, { skip, limit }) => {
+                const todos = await todoService.listTodos(skip, limit);
+                const items = await todoService.listTodoItems(todos.items.map(t => t.id));
+                return {
+                    items: todos.items.map(t => serTodo(t, items.filter(i => i.todoId === t.id))),
+                    skip: todos.skip,
+                    limit: todos.limit,
+                    total: todos.total,
+                };
             }
         },
         Mutation: {

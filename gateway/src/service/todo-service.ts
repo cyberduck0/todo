@@ -1,4 +1,4 @@
-import { Todo, TodoItem } from "../model/todo";
+import { Todo, TodoItem, PaginatedList } from "../model/todo";
 
 export interface TodoService {
 
@@ -6,7 +6,7 @@ export interface TodoService {
 
     getTodoItem(todoId: string, id: string): Promise<TodoItem>;
 
-    listTodos(): Promise<Todo[]>;
+    listTodos(skip?: number, limit?: number): Promise<PaginatedList<Todo>>;
 
     listTodoItems(todoIds: string[]): Promise<TodoItem[]>;
 

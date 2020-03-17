@@ -65,15 +65,29 @@ export type MutationRemoveTodoItemArgs = {
   id: Scalars['String'];
 };
 
+export type PaginatedTodos = {
+   __typename?: 'PaginatedTodos';
+  items: Array<Todo>;
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  total: Scalars['Int'];
+};
+
 export type Query = {
    __typename?: 'Query';
   todo?: Maybe<Todo>;
-  todos: Array<Todo>;
+  todos?: Maybe<PaginatedTodos>;
 };
 
 
 export type QueryTodoArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryTodosArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
 };
 
 export type Todo = {
@@ -185,6 +199,8 @@ export type ResolversTypes = {
   TodoItem: ResolverTypeWrapper<TodoItem>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Float: ResolverTypeWrapper<Scalars['Float']>,
+  Int: ResolverTypeWrapper<Scalars['Int']>,
+  PaginatedTodos: ResolverTypeWrapper<PaginatedTodos>,
   Mutation: ResolverTypeWrapper<{}>,
   User: ResolverTypeWrapper<User>,
 };
@@ -198,13 +214,15 @@ export type ResolversParentTypes = {
   TodoItem: TodoItem,
   Boolean: Scalars['Boolean'],
   Float: Scalars['Float'],
+  Int: Scalars['Int'],
+  PaginatedTodos: PaginatedTodos,
   Mutation: {},
   User: User,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   todo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryTodoArgs, 'id'>>,
-  todos?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType>,
+  todos?: Resolver<Maybe<ResolversTypes['PaginatedTodos']>, ParentType, ContextType, RequireFields<QueryTodosArgs, never>>,
 };
 
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {
@@ -224,6 +242,14 @@ export type TodoItemResolvers<ContextType = any, ParentType extends ResolversPar
   done?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   created?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   index?: Resolver<ResolversTypes['Float'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
+
+export type PaginatedTodosResolvers<ContextType = any, ParentType extends ResolversParentTypes['PaginatedTodos'] = ResolversParentTypes['PaginatedTodos']> = {
+  items?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType>,
+  skip?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  limit?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
@@ -247,6 +273,7 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>,
   Todo?: TodoResolvers<ContextType>,
   TodoItem?: TodoItemResolvers<ContextType>,
+  PaginatedTodos?: PaginatedTodosResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
   User?: UserResolvers<ContextType>,
 };

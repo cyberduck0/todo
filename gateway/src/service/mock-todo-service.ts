@@ -1,5 +1,5 @@
 import { TodoService } from './todo-service';
-import { Todo, TodoItem } from '../model/todo';
+import { Todo, TodoItem, PaginatedList } from '../model/todo';
 
 export class MockTodoService implements TodoService {
 
@@ -17,8 +17,12 @@ export class MockTodoService implements TodoService {
         return Promise.resolve(items.find(i => i.id === id));
     }
 
-    listTodos(): Promise<Todo[]> {
-        return Promise.resolve(this.todos);
+    listTodos(skip: number = 0, limit: number = 20): Promise<PaginatedList<Todo>> {
+        const end = skip + limit;
+        return Promise.resolve({
+            items: this.todos.slice(skip, end),
+            limit, skip, total: this.todos.length
+        });
     }
 
     listTodoItems(todoId: string[]): Promise<TodoItem[]> {

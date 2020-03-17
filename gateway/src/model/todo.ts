@@ -1,3 +1,10 @@
+export interface PaginatedList<T> {
+    items: T[];
+    skip: number;
+    limit: number;
+    total: number;
+}
+
 export interface Todo {
     id: string;
     title: string;

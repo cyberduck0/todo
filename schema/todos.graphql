@@ -1,3 +1,10 @@
+type PaginatedTodos {
+    items: [Todo!]!
+    skip: Int!
+    limit: Int!
+    total: Int!
+}
+
 type Todo @key(fields: "id") {
     id: ID!
     title: String!
@@ -21,7 +28,7 @@ extend type User @key(fields: "id") {
 
 type Query {
     todo(id: String!): Todo
-    todos: [Todo!]!
+    todos(skip: Int, limit: Int): PaginatedTodos
 }
 
 type Mutation {
