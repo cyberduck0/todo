@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { ListItem } from '../list-item/list-item.model';
+import React, { Component, Fragment } from 'react';
+import { Todo } from '../list-item/list-item.model';
 import ListItemComponent from '../list-item/list.component';
 import { RouteComponentProps } from 'react-router';
 import gql from 'graphql-tag';
@@ -9,14 +9,14 @@ import AddListModal from '../add-list-modal/add-list-modal.component';
 const GET_LIST_ITEMS = gql`
   query TodoItems {
     todos {
-      id,
-      title,
-      comment,
+      id
+      title
+      comment
       items {
         content
         done
         created
-      },
+      }
     }
   }
 `;
@@ -24,7 +24,7 @@ const GET_LIST_ITEMS = gql`
 interface ListItemProps extends RouteComponentProps {}
 
 interface WrappedListItem {
-  todos: ListItem[];
+  todos: Todo[];
 }
 
 const ListComponent: React.FC<ListItemProps> = (props) => {
