@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Todo } from '../list-item/list-item.model';
 import ListItemComponent from '../list-item/list.component';
 import { RouteComponentProps } from 'react-router';
