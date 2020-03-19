@@ -34,7 +34,7 @@ jobs:
           yarn install
           yarn run lint
           yarn build
-          yarn export
+          rimraf docs/export && next export -o export && yarn build-sw && cpy-cli  cdn/. export
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
