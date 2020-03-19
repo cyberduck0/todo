@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { SideBarItem } from '../constants';
 import './side-bar-item.component.scss';
-import { Link } from 'react-router-dom';
 
 export default class SideBarItemComponent extends Component<SideBarItem> {
   render() {

@@ -1,24 +1,14 @@
+import { Box, Button, Card, CardActions, CardContent, styled, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  styled,
-  Typography,
-} from '@material-ui/core';
-import { ListItemComponentModel } from './list-item.model';
 import RemoveListModalComponent from '../remove-list-modal/remove-list-modal.component';
 import './list-item.component.scss';
+import { ListItemComponentModel } from './list-item.model';
 
 const MyTypography = styled(Typography)({
   fontSize: 14,
 });
 
-export default class ListItemComponent extends Component<
-  ListItemComponentModel
-> {
+export default class ListItemComponent extends Component<ListItemComponentModel> {
   render() {
     const listLength = this.props.items.length;
     return (

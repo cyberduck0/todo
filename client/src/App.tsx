@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import SideBar from './components/side-bar';
-import ContentComponent from './components/content/content.component';
-import MainAppRouter from './app-router';
 import { BrowserRouter } from 'react-router-dom';
+import MainAppRouter from './app-router';
+import ContentComponent from './components/content/content.component';
+import SideBar from './components/side-bar';
 
 export default class App extends Component {
   render() {

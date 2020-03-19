@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import DragIndicator from '@material-ui/icons/DragIndicator';
+import React, { Component } from 'react';
 import './sortable-list.component.scss';
 
 type SortableItem<T> = T & { index: number };
@@ -9,19 +9,13 @@ interface SortableListComponent<T> {
   onOrderChange?: (data: { item: SortableItem<T>; newIndex: number }) => void;
 }
 
-export default class SortableList<T> extends Component<
-  SortableListComponent<T>
-> {
+export default class SortableList<T> extends Component<SortableListComponent<T>> {
   onDrop(ev: React.DragEvent<HTMLDivElement>) {
     ev.preventDefault();
     const targetItemIndex = Number(ev.dataTransfer.getData('text'));
-    const itemIndex = Number(
-      this.locateSortableItemParent(ev.target as HTMLElement),
-    );
+    const itemIndex = Number(this.locateSortableItemParent(ev.target as HTMLElement));
 
-    const afterItemIndex = this.props.items.findIndex(
-      singleItem => singleItem.index === itemIndex,
-    );
+    const afterItemIndex = this.props.items.findIndex(singleItem => singleItem.index === itemIndex);
 
     if (this.props.onOrderChange) {
       if (this.props.items.length - 1 === afterItemIndex) {
@@ -31,11 +25,7 @@ export default class SortableList<T> extends Component<
         });
       } else {
         // Example 5 - 4 / 2 + 4 = 4.5 the new index
-        const newIndex =
-          (this.props.items[afterItemIndex + 1].index -
-            this.props.items[afterItemIndex].index) /
-            2 +
-          this.props.items[afterItemIndex].index;
+        const newIndex = (this.props.items[afterItemIndex + 1].index - this.props.items[afterItemIndex].index) / 2 + this.props.items[afterItemIndex].index;
         this.props.onOrderChange({
           item: this.props.items[targetItemIndex],
           newIndex,
@@ -50,12 +40,7 @@ export default class SortableList<T> extends Component<
 
   locateSortableItemParent(element: HTMLElement): string {
     const index = element.getAttribute('item-index');
-    return (
-      index ||
-      (element.parentElement &&
-        this.locateSortableItemParent(element.parentElement)) ||
-      ''
-    );
+    return index || (element.parentElement && this.locateSortableItemParent(element.parentElement)) || '';
   }
 
   render() {
@@ -80,9 +65,7 @@ export default class SortableList<T> extends Component<
               <div className='sortable-item-drag'>
                 <DragIndicator />
               </div>
-              <div className='sortable-item-content'>
-                {(children as (item: T) => T)(singleItem)}
-              </div>
+              <div className='sortable-item-content'>{(children as (item: T) => T)(singleItem)}</div>
             </div>
           ))}
       </div>

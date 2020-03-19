@@ -1,10 +1,10 @@
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import React, { Fragment } from 'react';
+import { RouteComponentProps } from 'react-router';
+import AddListModal from '../add-list-modal/add-list-modal.component';
 import { Todo } from '../list-item/list-item.model';
 import ListItemComponent from '../list-item/list.component';
-import { RouteComponentProps } from 'react-router';
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
-import AddListModal from '../add-list-modal/add-list-modal.component';
 
 const GET_LIST_ITEMS = gql`
   query TodoItems {
@@ -32,9 +32,7 @@ const ListComponent: React.FC<RouteComponentProps> = props => {
     <Fragment>
       <AddListModal />
       {loading ? <p>Loading ...</p> : null}
-      {error ? (
-        <p>There was an error fetching the list, please try again. </p>
-      ) : null}
+      {error ? <p>There was an error fetching the list, please try again. </p> : null}
       {!data || !data.todos.length ? <p>No Todo lists available. </p> : null}
       {data
         ? data.todos.map(listItem => (

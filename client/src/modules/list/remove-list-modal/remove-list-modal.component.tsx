@@ -1,10 +1,10 @@
-import React from 'react';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { IconButton } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+import DeleteIcon from '@material-ui/icons/Delete';
+import gql from 'graphql-tag';
+import React from 'react';
 import './remove-list-modal.component.scss';
 
 interface RemoveListProps {
@@ -47,14 +47,7 @@ const RemoveListModalComponent: React.FC<RemoveListProps> = props => {
 
   return (
     <div>
-      <IconButton
-        size='small'
-        className='delete-button'
-        color='secondary'
-        title='Remove list'
-        aria-label='Remove list'
-        component='span'
-        onClick={handleOpen}>
+      <IconButton size='small' className='delete-button' color='secondary' title='Remove list' aria-label='Remove list' component='span' onClick={handleOpen}>
         <DeleteIcon />
       </IconButton>
       <Modal open={open} onClose={handleClose}>
