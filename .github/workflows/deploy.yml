@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: run frontend lint
+      - name: run frontend install -> lint -> build -> export
         working-directory: ./client/
         run: | 
           yarn install
