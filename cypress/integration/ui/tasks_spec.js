@@ -25,6 +25,8 @@ const innerModal = '[class="modal-inner"]'
 
 const addItemsTextSelector = 'textarea.MuiInput-input'
 const addTodoItemsButtonSelector = 'button:contains("Add todo items")'
+const itemTextSelector = '.todo-item-list .MuiInput-input'
+const itemDragSelector = '.todo-item-list .sortable-item-drag'
 
 var taskTitle = ''
 var taskTitleSelector = `[class="MuiCardContent-root"]>h3:contains("${taskTitle}")`
@@ -50,114 +52,86 @@ describe('Tasks Manipulation', function () {
     })
 
 
-//    after('Make sure all tasks are deleted', function () {
-//        cy.get(listsNavItem)
-//            .click()
-//
-//        cy.get(deleteTaskButtonSelector)
-//            .each($el => {
-//                $el.click()
-//                cy.get(innerModal).within(() => {
-//                    cy.get(confirmButtonSelector)
-//                        .click({multiple:true})
-//                })
-//            })
-//
-//        cy.get(mainContentSelector)
-//            cy.get(mainContentSelector).should(($div) => {
-//                expect($div.get(0).innerText).to.contain('No Todo lists available.')
-//                expect($div.get(0).innerText).to.not.contain('Do It On: ')
-//            })
-//    })
+    after('Make sure all tasks are deleted', function () {
+        cy.get(listsNavItem)
+            .click()
+
+        cy.get(deleteTaskButtonSelector)
+            .each($el => {
+                $el.click()
+                cy.get(innerModal).within(() => {
+                    cy.get(confirmButtonSelector)
+                        .click({multiple:true})
+                })
+            })
+
+        cy.get(mainContentSelector)
+            cy.get(mainContentSelector).should(($div) => {
+                expect($div.get(0).innerText).to.contain('No Todo lists available.')
+                expect($div.get(0).innerText).to.not.contain('Do It On: ')
+            })
+    })
 
 
-//    it('User can create a new task', function () {
-//        taskTitle = 'Do It On: ' + Date.now()
-//
-//        cy.get(listsNavItem)
-//            .click()
-//
-//        cy.get(addListButtonSelector)
-//            .click()
-//
-//        cy.get(taskTitleInputSelector)
-//            .type(taskTitle)
-//            .should('have.value',taskTitle)
-//
-//        cy.get(confirmAddTaskButtonSelector)
-//            .click()
-//
-//        cy.get(mainContentSelector).should(($div) => {
-//            expect($div.get(0).innerText).to.contain(taskTitle)
-//        })
-//    })
-//
-//    it('User can delete a list', function () {
-//        taskTitle = 'Do It On: ' + Date.now()
-//
-//        cy.get(listsNavItem)
-//            .click()
-//
-//        cy.get(addListButtonSelector)
-//            .click()
-//
-//        cy.get(taskTitleInputSelector)
-//            .type(taskTitle)
-//            .should('have.value',taskTitle)
-//
-//        cy.get(confirmAddTaskButtonSelector)
-//            .click()
-//
-//        cy.get(mainContentSelector).should(($div) => {
-//            expect($div.get(0).innerText).to.contain(taskTitle)
-//        })
-//
-//        cy.get(`[class="MuiCardContent-root"]>h3:contains("${taskTitle}")`)
-//            .parent()
-//            .parent().within(() => {
-//                cy.get(deleteTaskButtonSelector)
-//                    .click()
-//        })
-//
-//        cy.get(innerModal).within(() => {
-//            cy.get(confirmButtonSelector)
-//                .click()
-//        })
-//
-//        cy.get(mainContentSelector).should(($div) => {
-//            expect($div.get(0).innerText).to.not.contain(taskTitle)
-//        })
-//    })
+    it('User can create a new task', function () {
+        taskTitle = 'Do It On: ' + Date.now()
 
-//    it('User can edit a task', function () {
-//        taskTitle = 'Do It On: ' + Date.now()
-//
-//        cy.get(listsNavItem)
-//            .click()
-//
-//        cy.get(addListButtonSelector)
-//            .click()
-//
-//        cy.get(taskTitleInputSelector)
-//            .type(taskTitle)
-//            .should('have.value',taskTitle)
-//
-//        cy.get(confirmAddTaskButtonSelector)
-//            .click()
-//
-//        cy.get(`[class="MuiCardContent-root"]>h3:contains("${taskTitle}")`)
-//            .parent()
-//            .parent().within(() => {
-//                cy.get(editTaskButtonSelector)
-//                    .click()
-//        })
-//
-//        cy.get(mainContentSelector).should(($div) => {
-//            expect($div.get(0).innerText).to.contain('single item')
-//        })
-//    })
+        cy.get(listsNavItem)
+            .click()
 
-    it('User can sort tasks by drag and drop', function () {
+        cy.get(addListButtonSelector)
+            .click()
+
+        cy.get(taskTitleInputSelector)
+            .type(taskTitle)
+            .should('have.value',taskTitle)
+
+        cy.get(confirmAddTaskButtonSelector)
+            .click()
+
+        cy.get(mainContentSelector).should(($div) => {
+            expect($div.get(0).innerText).to.contain(taskTitle)
+        })
+    })
+
+    it('User can delete a list', function () {
+        taskTitle = 'Do It On: ' + Date.now()
+
+        cy.get(listsNavItem)
+            .click()
+
+        cy.get(addListButtonSelector)
+            .click()
+
+        cy.get(taskTitleInputSelector)
+            .type(taskTitle)
+            .should('have.value',taskTitle)
+
+        cy.get(confirmAddTaskButtonSelector)
+            .click()
+
+        cy.get(mainContentSelector).should(($div) => {
+            expect($div.get(0).innerText).to.contain(taskTitle)
+        })
+
+        cy.get(`[class="MuiCardContent-root"]>h3:contains("${taskTitle}")`)
+            .parent()
+            .parent().within(() => {
+                cy.get(deleteTaskButtonSelector)
+                    .click()
+        })
+
+        cy.get(innerModal).within(() => {
+            cy.get(confirmButtonSelector)
+                .click()
+        })
+
+        cy.get(mainContentSelector).should(($div) => {
+            expect($div.get(0).innerText).to.not.contain(taskTitle)
+        })
+    })
+
+    it('User can edit a task', function () {
         taskTitle = 'Do It On: ' + Date.now()
 
         cy.get(listsNavItem)
@@ -180,6 +154,34 @@ describe('Tasks Manipulation', function () {
                     .click()
         })
 
+        cy.get(mainContentSelector).should(($div) => {
+            expect($div.get(0).innerText).to.contain('single item')
+        })
+    })
+
+    it('User can sort tasks by drag and drop', function () {
+        taskTitle = 'Do It On: ' + Date.now()
+
+        cy.get(listsNavItem)
+            .click()
+
+        cy.get(addListButtonSelector)
+            .click()
+
+        cy.get(taskTitleInputSelector)
+            .type(taskTitle)
+            .should('have.value', taskTitle)
+
+        cy.get(confirmAddTaskButtonSelector)
+            .click()
+
+        cy.get(`[class="MuiCardContent-root"]>h3:contains("${taskTitle}")`)
+            .parent()
+            .parent().within(() => {
+                cy.get(editTaskButtonSelector)
+                    .click()
+        })
+
         cy.get(addItemsButtonSelector)
             .click()
 
@@ -191,6 +193,22 @@ describe('Tasks Manipulation', function () {
             .get(addTodoItemsButtonSelector)
                 .click()
 
+        cy.get(itemTextSelector).eq(0)
+            .should('have.value', 'Item A')
+        cy.get(itemTextSelector).eq(1)
+            .should('have.value', 'Item B')
+        cy.get(itemTextSelector).eq(2)
+            .should('have.value', 'Item C')
+
+        cy.get(itemDragSelector).eq(2)
+            .drag(itemDragSelector)
+
+        cy.get(itemTextSelector).eq(0)
+            .should('have.value', 'Item A')
+        cy.get(itemTextSelector).eq(1)
+            .should('have.value', 'Item C')
+        cy.get(itemTextSelector).eq(2)
+            .should('have.value', 'Item B')
     })
 
 })
