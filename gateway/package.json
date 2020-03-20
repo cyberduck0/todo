@@ -19,12 +19,11 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "build": "yarn graphql && yarn proto_todos_js && yarn proto_todos_ts",
-    "proto": "yarn proto_todos_js && yarn proto_todos_ts && yarn proto_users_js && yarn proto_users_ts",
-    "proto_todos_js": "yarn run grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./src/generated/pb --grpc_out=./src/generated/pb -I=../proto ../proto/*.proto",
-    "proto_todos_ts": "yarn run grpc_tools_node_protoc --plugin=node_modules/.bin/protoc-gen-ts --ts_out=./src/generated/pb -I=../proto ../proto/*.proto",
-    "proto_users_js": "yarn run grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./src/generated/pb --grpc_out=./src/generated/pb -I=../proto ../proto/*.proto",
-    "proto_users_ts": "yarn run grpc_tools_node_protoc --plugin=node_modules/.bin/protoc-gen-ts --ts_out=./src/generated/pb -I=../proto ../proto/*.proto",
+    "proto": "yarn proto_todo_js && yarn proto_todo_ts && yarn proto_user_js && yarn proto_user_ts",
+    "proto_todo_js": "yarn run grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./src/generated/pb --grpc_out=./src/generated/pb -I=../todo-service/src/main/proto ../todo-service/src/main/proto/*.proto",
+    "proto_todo_ts": "yarn run grpc_tools_node_protoc --plugin=node_modules/.bin/protoc-gen-ts --ts_out=./src/generated/pb -I=../todo-service/src/main/proto ../todo-service/src/main/proto/*.proto",
+    "proto_user_js": "yarn run grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./src/generated/pb --grpc_out=./src/generated/pb -I=../user-service/app/protobuf ../user-service/app/protobuf/*.proto",
+    "proto_user_ts": "yarn run grpc_tools_node_protoc --plugin=node_modules/.bin/protoc-gen-ts --ts_out=./src/generated/pb -I=../user-service/app/protobuf ../user-service/app/protobuf/*.proto",
     "graphql": "graphql-codegen -c graphql_codegen.yml",
     "start": "ts-node index.ts"
   }

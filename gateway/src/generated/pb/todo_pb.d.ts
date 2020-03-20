@@ -1,5 +1,5 @@
 // package: todo
-// file: todos.proto
+// file: todo.proto
 
 /* tslint:disable */
 /* eslint-disable */
@@ -151,10 +151,8 @@ export namespace ListTodosResponse {
 }
 
 export class ListTodoItemsRequest extends jspb.Message { 
-    clearIdList(): void;
-    getIdList(): Array<string>;
-    setIdList(value: Array<string>): void;
-    addId(value: string, index?: number): string;
+    getId(): string;
+    setId(value: string): void;
 
 
     serializeBinary(): Uint8Array;
@@ -169,7 +167,7 @@ export class ListTodoItemsRequest extends jspb.Message {
 
 export namespace ListTodoItemsRequest {
     export type AsObject = {
-        idList: Array<string>,
+        id: string,
     }
 }
 

@@ -1028,19 +1028,12 @@ proto.todo.ListTodosResponse.prototype.clearItemsList = function() {
  * @constructor
  */
 proto.todo.ListTodoItemsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.todo.ListTodoItemsRequest.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.todo.ListTodoItemsRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   proto.todo.ListTodoItemsRequest.displayName = 'proto.todo.ListTodoItemsRequest';
 }
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.todo.ListTodoItemsRequest.repeatedFields_ = [1];
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -1070,7 +1063,7 @@ proto.todo.ListTodoItemsRequest.prototype.toObject = function(opt_includeInstanc
  */
 proto.todo.ListTodoItemsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    idList: jspb.Message.getRepeatedField(msg, 1)
+    id: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -1109,7 +1102,7 @@ proto.todo.ListTodoItemsRequest.deserializeBinaryFromReader = function(msg, read
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.addId(value);
+      msg.setId(value);
       break;
     default:
       reader.skipField();
@@ -1140,9 +1133,9 @@ proto.todo.ListTodoItemsRequest.prototype.serializeBinary = function() {
  */
 proto.todo.ListTodoItemsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getIdList();
+  f = message.getId();
   if (f.length > 0) {
-    writer.writeRepeatedString(
+    writer.writeString(
       1,
       f
     );
@@ -1151,31 +1144,17 @@ proto.todo.ListTodoItemsRequest.serializeBinaryToWriter = function(message, writ
 
 
 /**
- * repeated string id = 1;
- * @return {!Array<string>}
+ * optional string id = 1;
+ * @return {string}
  */
-proto.todo.ListTodoItemsRequest.prototype.getIdList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 1));
+proto.todo.ListTodoItemsRequest.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
-/** @param {!Array<string>} value */
-proto.todo.ListTodoItemsRequest.prototype.setIdList = function(value) {
-  jspb.Message.setField(this, 1, value || []);
-};
-
-
-/**
- * @param {string} value
- * @param {number=} opt_index
- */
-proto.todo.ListTodoItemsRequest.prototype.addId = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 1, value, opt_index);
-};
-
-
-proto.todo.ListTodoItemsRequest.prototype.clearIdList = function() {
-  this.setIdList([]);
+/** @param {string} value */
+proto.todo.ListTodoItemsRequest.prototype.setId = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
