@@ -19,13 +19,12 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "build": "yarn graphql && yarn proto_todos_js && yarn proto_todos_ts",
     "proto": "yarn proto_todos_js && yarn proto_todos_ts && yarn proto_users_js && yarn proto_users_ts",
     "proto_todos_js": "yarn run grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./src/generated/pb --grpc_out=./src/generated/pb -I=../proto ../proto/*.proto",
     "proto_todos_ts": "yarn run grpc_tools_node_protoc --plugin=node_modules/.bin/protoc-gen-ts --ts_out=./src/generated/pb -I=../proto ../proto/*.proto",
     "proto_users_js": "yarn run grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./src/generated/pb --grpc_out=./src/generated/pb -I=../proto ../proto/*.proto",
     "proto_users_ts": "yarn run grpc_tools_node_protoc --plugin=node_modules/.bin/protoc-gen-ts --ts_out=./src/generated/pb -I=../proto ../proto/*.proto",
-    "graphql": "graphql-codegen -c graphql_codegen.yml",
+    "schema": "rm -R ./generated/schema && cp ../../../schema ./generated/schema && graphql-codegen -c graphql_codegen.yml",
     "start": "ts-node index.ts"
   },
   "devDependencies": {

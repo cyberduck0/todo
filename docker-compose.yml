@@ -16,6 +16,13 @@ services:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
 
-networks:
-    app-network:
-        driver: bridge
+  todo-gateway:
+    container_name: todo-gateway
+    build:
+      context: './gateway'
+    volumes:
+        - './schema:/opt/schema' # GQL schema is used during runtime
+    environment:
+      PORT: 4001
+    ports:
+      - 4001:4001

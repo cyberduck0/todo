@@ -9,8 +9,16 @@ yarn install
 yarn start
 ```
 
+## gRPC code generation
+
+`yarn proto` will generate code and types from `../proto` files. 
+Always do this when any proto file change and commit the results.
+
+## GQL schema code generation
+
+`yarn schema` will generate code and types from `../schema` files. 
+Always do this when any GraphQL schema file change and commit the results.
+
 ## TODO
 
-- add all GQL mutations to TodoService and MockedTodoService (for now)
-- point RPC generator to proto files and enable it
 - resolve using the RPC clients
