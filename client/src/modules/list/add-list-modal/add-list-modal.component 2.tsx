@@ -5,29 +5,26 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
-import { TODO_LIST_MAX_PER_PAGE } from '../list-item/list-item.model';
 import './add-list-modal.component.scss';
 
 const GET_LIST_ITEMS = gql`
-  query TodoItems($skip: Int!, $limit: Int!) {
-    todos(skip: $skip, limit: $limit) {
+  query TodoItems {
+    todo {
+      id
+      title
+      comment
       items {
-        id,
-        title,
-        comment,
-        items {
-          content
-          done
-          created
-        },
-      }
+        content
+        done
+        created
+      },
     }
   }
 `;
 
 const ADD_TODO_LIST = gql`
-  mutation addTodo($title: String!, $comment: String) {
-    addTodo(title: $title, comment: $comment){
+  mutation addTodoList($title: String, $comment: String) {
+    addTodoList(title: $title, comment: $comment){
         id
         title
         comment
@@ -69,15 +66,7 @@ export default function AddListModal() {
                                         title: titleInputRef.current.value,
                                         comment: commentInputRef.current.value
                                     },
-                                    refetchQueries: [
-                                        {
-                                            query: GET_LIST_ITEMS,
-                                            variables: {
-                                                skip: 0,
-                                                limit: TODO_LIST_MAX_PER_PAGE
-                                            }
-                                        }
-                                    ],
+                                    refetchQueries: [{query: GET_LIST_ITEMS}],
                                 });
                                 titleInputRef.current.value = '';
                                 commentInputRef.current.value = '';
