@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import { useApolloClient } from '@apollo/react-hooks';
+import React, { useState } from 'react';
 
 export interface UserAuthServiceModel {
   state: boolean;
@@ -10,24 +11,37 @@ export const UserAuthService = React.createContext<UserAuthServiceModel>({
   setState: () => void 0,
 });
 
-export default class UserAuthServiceContainer extends Component {
-  state = {
-    isLoggedIn: false,
+const UserAuthServiceContainer: React.FC<{}> = props => {
+  const [loggedIn, setLoggedInState] = useState(false);
+  const userCache = useApolloClient();
+
+  const setNewUserState = (newVal: boolean) => {
+    setLoggedInState(newVal);
+    if (newVal) {
+      userCache.writeData({
+        data: {
+          currentUser: {
+            __typename: 'User',
+            id: '9h3bhgrnjmfdv',
+            name: 'Jack',
+            lastName: 'Black',
+            username: 'jack.black@gmail.com',
+            role: 'Marketing',
+          },
+        },
+      });
+    }
   };
 
-  setNewUserState(newVal: boolean) {
-    this.setState({ isLoggedIn: newVal });
-  }
+  return (
+    <UserAuthService.Provider
+      value={{
+        state: loggedIn,
+        setState: setNewUserState,
+      }}>
+      {props.children}
+    </UserAuthService.Provider>
+  );
+};
 
-  render() {
-    return (
-      <UserAuthService.Provider
-        value={{
-          state: this.state.isLoggedIn,
-          setState: this.setNewUserState.bind(this),
-        }}>
-        {this.props.children}
-      </UserAuthService.Provider>
-    );
-  }
-}
+export default UserAuthServiceContainer;

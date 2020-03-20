@@ -4,9 +4,6 @@
             "dom",
             "es2015"
         ],
-        "types": [
-            "node"
-        ],
         "typeRoots": [
             "./node_modules/@types",
             "./typings"

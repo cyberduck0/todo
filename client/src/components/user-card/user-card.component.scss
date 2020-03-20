@@ -1,0 +1,19 @@
+@import '../../assets/scss/colors';
+
+.user-card {
+  display: flex;
+  padding: 1rem;
+  border-bottom: 1px solid $border;
+
+  &-content {
+    padding: 5px;
+  }
+
+  &-name {
+    text-transform: capitalize;
+  }
+
+  &-about {
+    font-weight: 100;
+  }
+}
