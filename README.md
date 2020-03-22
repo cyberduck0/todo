@@ -1,17 +1,18 @@
 # Todo
+![CI Test](https://github.com/cyberduck1/todo/workflows/CI%20Test/badge.svg?branch=dev)
 
 This is a simple todo list app that includes the next tech stack
 
-UI -> React TSX, GraphQL client (Mustation, codegen, Queries) with apollo hooks, Emotion.js 
+UI -> React TSX, GraphQL client (Mutation, codegen, Queries) with apollo hooks, Emotion.js 
 BE -> NodeJS, Express, Apollo server, GraphQL, Apollo gateway, Scala gRPC
 
 Docker container + docker-compose
 
-# Instalation
+# Installation
 
 First clone the project locally with `git clone https://github.com/cyberduck1/todo.git`
 
-Clone with ssh `git clone git@github.com:cyberduck1/todo.git` _RECOMENDED_
+Clone with ssh `git clone git@github.com:cyberduck1/todo.git` _RECOMMENDED_
 
 * For running the docker container type `docker-compose up` in the root folder
 * If running it the first time, a build is required so we add `--build` to the terminal execution

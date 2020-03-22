@@ -3,12 +3,14 @@
   display: flex;
   justify-content: center;
   cursor: pointer;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
 }
 
 .add-user-icon {
   display: flex;
   align-self: center;
   cursor: pointer;
-  width: 10%;
-  padding: 5%;
+  padding: 3%;
 }

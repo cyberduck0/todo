@@ -2,27 +2,29 @@ export const TODO_LIST_MAX_PER_PAGE = 4;
 
 export interface PaginatedTodos {
   todos: {
-    items: ListItem[];
+    items: Todo[];
     skip: number;
     limit: number;
     total: number;
   }
 }
 
-export interface ListItemItems {
+export interface TodoItem {
+  id: string;
+  todoId: string;
   content: string;
-  done: boolean;
   created: string;
-  assigned?: string;
+  done: boolean;
+  index: number;
 }
 
-export interface ListItem {
+export interface Todo {
   id: string;
   title: string;
   comment: string;
-  items: ListItemItems[];
+  items: TodoItem[];
 }
 
-export interface ListItemComponentModel extends ListItem {
+export interface ListItemComponentModel extends Todo {
   clicked: () => void;
 }

@@ -78,7 +78,7 @@ export class MockTodoService implements TodoService {
     async removeTodoItem(todoId: string, id: string): Promise<void> {
         const items = this.todoItems[todoId];
         if (items === undefined) throw new Error("Unknown Todo ID");
-        this.todoItems[id] = items.filter(ti => ti.id !== id);
+        this.todoItems[todoId] = items.filter(ti => ti.id !== id);
     }
 
     private partialUpdate<T>(item: T, update: Partial<T>): T {

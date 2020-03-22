@@ -1,0 +1,52 @@
+name: CI Test
+on:
+  pull_request:
+    branches: 
+      - master
+      - dev
+  push:
+    branches:
+      - dev
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Get yarn cache
+      id: yarn-cache
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - uses: actions/cache@v1
+      with:
+        path: ${{ steps.yarn-cache.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - uses: actions/setup-node@v1.1.0
+      name: run frontend integration
+      with:
+        node-version: '10.x'
+    
+    - name: run frontend install
+      working-directory: ./client/
+      run: yarn install
+
+    - name: run frontend lint
+      working-directory: ./client/
+      run: yarn run lint
+  
+    - name: run frontend tests
+      working-directory: ./client/
+      run: yarn test
+      
+    - name: run frontend build
+      working-directory: ./client/
+      run: yarn build

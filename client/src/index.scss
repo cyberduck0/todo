@@ -15,6 +15,10 @@ code {
     monospace;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 #root,
 #app-container,
 html,
@@ -26,4 +30,12 @@ body {
 
 #app-container {
   display: flex;
+}
+
+// Create classes for height {.height-10%/100%}
+@for $i from 1 through 10 {
+  .height-#{$i+'0'} {
+    height: #{$i+'0%'};
+    max-height: #{$i+'0%'};
+  }
 }

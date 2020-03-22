@@ -17,6 +17,6 @@ export default [
   {
     tag: 'List',
     url: '/list',
-    icon: <ListIcon />
-  }
+    icon: <ListIcon />,
+  },
 ] as SideBarItem[];

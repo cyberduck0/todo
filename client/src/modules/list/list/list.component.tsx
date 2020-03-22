@@ -1,14 +1,15 @@
-import React, { Fragment } from 'react';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import React, { Fragment, useContext, useState } from 'react';
 import { PaginatedTodos, TODO_LIST_MAX_PER_PAGE } from '../list-item/list-item.model';
 import ListItemComponent from '../list-item/list.component';
 import { RouteComponentProps } from 'react-router';
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
 import AddListModal from '../add-list-modal/add-list-modal.component';
 import { Button, Divider } from '@material-ui/core';
+import DisplayLimit from '../list.context';
 import './list.component.scss';
 
-const GET_LIST_ITEMS = gql`
+export const GET_LIST_ITEMS = gql`
   query TodoItems($skip: Int!, $limit: Int!) {
     todos(skip: $skip, limit: $limit) {
       skip,
@@ -32,18 +33,22 @@ interface ListItemProps extends RouteComponentProps {}
 
 const ListComponent: React.FC<ListItemProps> = (props) => {
 
-  let displayLimit = TODO_LIST_MAX_PER_PAGE;
+  const displayLimitHook = useState(TODO_LIST_MAX_PER_PAGE);
+
+  const [displayLimit, setDisplayLimit] = useContext(DisplayLimit);
+
   
   const { loading, error, data, fetchMore } = useQuery<PaginatedTodos>(GET_LIST_ITEMS, {
     variables: {
       skip: 0,
       limit: displayLimit
     },
-    fetchPolicy: "cache-and-network"
+    fetchPolicy: "cache-and-network",
+    notifyOnNetworkStatusChange: true,
   });
 
   const onLoadMore = () => {
-    displayLimit = displayLimit + TODO_LIST_MAX_PER_PAGE;
+    updateDisplayLimit();
     fetchMore ({
       variables: {
         skip: data?.todos?.items.length,
@@ -57,21 +62,27 @@ const ListComponent: React.FC<ListItemProps> = (props) => {
     })
   }
 
+  const updateDisplayLimit = () => {
+    setDisplayLimit(displayLimit + TODO_LIST_MAX_PER_PAGE);
+}
+
   return (
     <Fragment>
-      <AddListModal></AddListModal>
-      <Divider/>
-      <div className="lists-wrapper">
-        { loading ? <p>Loading ...</p> : null }
-        { error ? <p>There was an error fetching the list, please try again. </p> : null }
-        { !data || !data.todos || !data.todos.items.length ? <p>No Todo lists available. </p> : null }
-        { data && data.todos ? data.todos.items.map(listItem => (
-          <ListItemComponent key={listItem.id} {...listItem} clicked={() => { props.history.push(`${props.match.url}/${listItem.id}`) }}/>
-        )) : null }
-        { data && data.todos && (data.todos.total > data.todos.items.length) ? <Button variant="contained" color="primary" onClick={() => onLoadMore()}>Load more &hellip;</Button> : null }
-      </div>
+      <DisplayLimit.Provider value={displayLimitHook}>
+        <AddListModal></AddListModal>
+        <Divider/>
+        <div className="lists-wrapper">
+          { loading ? <p>Loading ...</p> : null }
+          { error ? <p>There was an error fetching the lists, please try again. </p> : null }
+          { !error && (!data || !data.todos || !data.todos.items.length) ? <p>No Todo lists available. </p> : null }
+          { data && data.todos ? data.todos.items.map(listItem => (
+            <ListItemComponent key={listItem.id} {...listItem} clicked={() => { props.history.push(`${props.match.url}/${listItem.id}`) }}/>
+          )) : null }
+          { data && data.todos && (data.todos.total > data.todos.items.length) ? <Button variant="contained" color="primary" onClick={() => onLoadMore()}>Load more &hellip;</Button> : null }
+        </div>
+      </DisplayLimit.Provider>
     </Fragment>
   );
-}
+};
 
 export default ListComponent;
