@@ -28,13 +28,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: run frontend lint
+      - name: run frontend install -> lint -> build -> export
         working-directory: ./client/
         run: | 
           yarn install
           yarn run lint
           yarn build
-          yarn export
+          rimraf docs/export && next export -o export && yarn build-sw && cpy-cli  cdn/. export
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
