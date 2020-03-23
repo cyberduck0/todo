@@ -109,7 +109,6 @@ export class List extends Page {
         return cy.get(`[class="sortable-item"]:has([value="${itemTitle}"])`)
       }
 
-
     static changeItemTitle(oldTitle, newTitle) {
         this.getItemSectionByTitle(oldTitle).within(() => {
             cy.get('div>input')

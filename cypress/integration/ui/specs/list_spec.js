@@ -118,7 +118,6 @@ describe('Items Manipulation', function () {
     })
 
     
-
     it('User can add items to list', function () {
         const timestamp = Date.now()
         const listTitle = 'Do It On: ' + timestamp
