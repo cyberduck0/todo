@@ -1,7 +1,0 @@
-**/src/generated
-
-**/.gradle
-**/.idea
-**/build
-**/node_modules
-**/target
