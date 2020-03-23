@@ -9,6 +9,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Install wait-on
+        run: npm install wait-on
+
       - name: Start GW
         working-directory: ./gateway
         run: yarn && yarn build && yarn start
