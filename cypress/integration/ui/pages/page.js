@@ -11,12 +11,11 @@ export class Page {
         cy.visit(url);
     }
 
-    static checkMainContentText(option, text) {
-        cy.get(this.mainContent).invoke('text').then((extractedText) => {
-            extractedText.should(option, text)
-        })
+    static getMainContent() {
+        return cy.get(this.mainContent)
     }
 
+    // TODO does not work correctly
     static getSelectorOfElem(element) {
         return Cypress.SelectorPlayground.getSelector(element)
     }

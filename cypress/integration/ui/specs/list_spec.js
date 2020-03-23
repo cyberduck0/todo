@@ -25,11 +25,11 @@ describe('Tasks Manipulation', function () {
         
         List.deleteAllLists()
         
-        //expect(Page.checkMainContentText('have.text', 'No Todo lists available.')) 
+        expect(Page.getMainContent().invoke('text').should('contain', 'No Todo lists available.'))
     })
 
 
-    it('User can create a new task', function () {
+    it('User can create a new list', function () {
         const listTitle = 'Do It On: ' + Date.now()
 
         NavBar.goTo('List')
@@ -38,7 +38,7 @@ describe('Tasks Manipulation', function () {
         List.setListTitle(listTitle)
         List.confirmAddListModal()
 
-        // expect(List.getListSection(listTitle).should('exist'))
+        expect(Page.getMainContent().invoke('text').should('contain', listTitle))
     })
 
 
@@ -51,12 +51,10 @@ describe('Tasks Manipulation', function () {
         List.setListTitle(listTitle)
         List.confirmAddListModal()
 
-        expect(List.getListSection(listTitle).should('exist'))
-
         List.deleteListModal(listTitle)
         List.confirmDeleteListModal()
   
-        // expect(Page.checkMainContentText('have.text', listTitle))
+        expect(Page.getMainContent().invoke('text').should('not.contain', listTitle))
     })
 
 
@@ -73,8 +71,8 @@ describe('Tasks Manipulation', function () {
         List.editList(listTitle)
         List.setNewListTitle(newListTitle)
 
-        // expect(Page.checkMainContentText('not.have.text', listTitle))
-        // cannot match fulltext since cypress writes the text too fast and omits some charactes
+        expect(List.getListTitleInputField().invoke('val').should('contain', newListTitle))
+        expect(List.getListTitleInputField().invoke('val').should('not.contain', listTitle))
     })
 
 
@@ -92,15 +90,14 @@ describe('Tasks Manipulation', function () {
         List.editList(listTitle)
         List.setNewListComment(newTaskComment)
 
-        // cannot match fulltext since cypress writes the text too fast and omits some charactes
-        // expect(Page.checkMainContentText('have.text', newTaskComment))
+        expect(List.getListCommentInputField().invoke('val').should('contain', newTaskComment))
     })
 
 
     it('User can add items to task list', function () {
         const timestamp = Date.now()
         const listTitle = 'Do It On: ' + timestamp
-        const newItemTitle = 'I have to do this tang on ' + timestamp
+        const itemTitle = 'I have to do this tang on ' + timestamp
 
         NavBar.goTo('List')
 
@@ -111,11 +108,10 @@ describe('Tasks Manipulation', function () {
         List.editList(listTitle)
        
         List.addListItem()
-        List.setListItemTitle(newItemTitle)
+        List.setListItemTitle(itemTitle)
         List.confirmAddListItem()
 
-        // cannot match fulltext since cypress writes the text too fast and omits some charactes
-        // expect(Page.checkMainContentText('have.text', newItemTitle))
+        expect(List.getItemRowByIndex(0).invoke('val').should('contain', itemTitle))
     })
 
 
@@ -139,8 +135,8 @@ describe('Tasks Manipulation', function () {
 
         List.changeItemTitle(itemTitle, newIemTitle)
 
-        // cannot match fulltext since cypress writes the text too fast and omits some charactes
-        // expect(Page.checkMainContentText('have.text', newItemTitle))
+        expect(List.getItemRowByIndex(0).invoke('val').should('contain', newIemTitle))
+        expect(List.getItemRowByIndex(0).invoke('val').should('not.contain', itemTitle))
     })
 
 
@@ -163,8 +159,7 @@ describe('Tasks Manipulation', function () {
 
         List.deleteItem(itemTitle)
 
-        // cannot match fulltext since cypress writes the text too fast and omits some charactes
-        // expect(Page.checkMainContentText('have.text', newItemTitle))
+        expect(List.getItemsTable().invoke('text').should('not.contain', itemTitle)) 
     })
 
 
@@ -190,6 +185,6 @@ describe('Tasks Manipulation', function () {
 
         List.dragItem(itemTitle2, itemIndexToMove)
 
-        expect(List.getRow(itemIndexToMove-1).invoke('val').should('equal', itemTitle2)) // index-1 since its handled as array, with index starting with 0
+        expect(List.getItemRowByIndex(itemIndexToMove-1).invoke('val').should('equal', itemTitle2)) // index-1 since its handled as array, with index starting with 0
     })
 })
