@@ -1,0 +1,27 @@
+name: Cypress tests
+
+on: push
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Start GW
+        working-directory: ./gateway
+        run: yarn && yarn build && yarn start
+
+      - name: Start Client
+        working-directory: ./client
+        wait-on: 'http://localhost:4001'
+        run: yarn && yarn start
+
+      - name: Cypress tests
+        uses: ./
+        with:
+          working-directory: ./
+          wait-on: 'http://localhost:3000'
+          build: npm run build
+          start: npm start
