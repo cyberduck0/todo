@@ -18,8 +18,8 @@ class IndexController @Inject()(val mongo: Mongo)(implicit mat: Materializer, ac
   def index = Action.async {
     async {
       val dbUsers = await(mongo.find[DbUser].list())
-      val grpcUsers = dbUsers map (u => userCompanionToFactory(grpc.User).formUser(u.toUser))
-      Ok("testy test")
+      val grpcUsers = dbUsers map (_.toUser) map grpc.User.formUser
+      Ok(grpcUsers mkString "\n")
     }
   }
 

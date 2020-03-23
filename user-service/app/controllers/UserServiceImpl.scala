@@ -19,7 +19,7 @@ class UserServiceImpl @Inject()(val mongo: Mongo)(implicit mat: Materializer, ac
 
   override def listUsers(in: Empty): Future[ListUsersResponse] = async {
     val dbUsers = await(mongo.find[DbUser].list())
-    val grpcUsers = dbUsers map (u => userCompanionToFactory(grpc.User).formUser(u.toUser))
+    val grpcUsers = dbUsers map (_.toUser) map grpc.User.formUser
     ListUsersResponse(grpcUsers)
   }
 

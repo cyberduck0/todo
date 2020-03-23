@@ -8,7 +8,7 @@ package object model {
 
   object Implicits {
 
-    implicit def userCompanionToFactory(comp: grpc.User.type) = GrpcUserFactory
+    implicit def userCompanionToFactory(comp: grpc.User.type): GrpcUserFactory.type = GrpcUserFactory
 
     object GrpcUserFactory {
       def formUser(user: User): grpc.User = grpc.User(user.id.toString, user.name)
