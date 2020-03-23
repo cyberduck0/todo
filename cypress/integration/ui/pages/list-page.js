@@ -37,9 +37,7 @@ export class List extends Page {
 
 
     static getListSectionByTitle(listTitle) {
-        return cy.get(`[class="MuiCardContent-root"]>h3:contains("${listTitle}")`)
-            .parent()
-            .parent()
+        return cy.get(`[class*="MuiPaper-root"]:contains("${listTitle}")`)
     }
 
 
@@ -108,13 +106,8 @@ export class List extends Page {
 
 
     static getItemSectionByTitle(itemTitle) {
-        return cy.get(`[class="todo-item-container"]>div>div>[value="${itemTitle}"]`)
-            .parent()
-            .parent()
-            .parent()
-            .parent()
-            .parent()
-    }
+        return cy.get(`[class="sortable-item"]:has([value="${itemTitle}"])`)
+      }
 
 
     static changeItemTitle(oldTitle, newTitle) {
@@ -134,6 +127,7 @@ export class List extends Page {
 
 
     static dragItem(itemToDrag, rowIndex) {
+        cy.log(`Moving "${itemToDrag}" to the row no. ${rowIndex}`)
         this.getItemSectionByTitle(itemToDrag).find(this.dragSelector) // what is dragged
             .drag(`div.sortable-list > div:nth-child(${rowIndex})`) // where it's dropped
     }

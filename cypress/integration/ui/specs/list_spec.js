@@ -2,6 +2,7 @@ import { NavBar } from '../pages/components/navbar';
 import { Page } from '../pages/page';
 import { List } from '../pages/list-page';
 import { Login } from '../pages/login-page';
+import { Helpers } from '../../../support/helpers'
 
 const validEmail = 'dude@gmail.com'
 
@@ -92,9 +93,33 @@ describe('Tasks Manipulation', function () {
 
         expect(List.getListCommentInputField().invoke('val').should('contain', newTaskComment))
     })
+})
 
 
-    it('User can add items to task list', function () {
+describe('Items Manipulation', function () {
+
+
+    beforeEach('User is successfully logged in', function () {
+        Page.goToUrl('')
+
+        Login.setLoginEmail(validEmail)
+        Login.submitLogin()
+    })
+
+
+    after('Make sure all tasks are deleted', function () {
+        // refresh; should be handled better
+        Page.goToUrl('localhost:3000/list')
+        Login.submitLogin()
+        
+        List.deleteAllLists()
+        
+        expect(Page.getMainContent().invoke('text').should('contain', 'No Todo lists available.'))
+    })
+
+    
+
+    it('User can add items to list', function () {
         const timestamp = Date.now()
         const listTitle = 'Do It On: ' + timestamp
         const itemTitle = 'I have to do this tang on ' + timestamp
@@ -166,10 +191,11 @@ describe('Tasks Manipulation', function () {
     it('User can sort tasks by drag and drop', function () {
         const timestamp = Date.now()
         const listTitle = 'Do It On: ' + timestamp
-        const itemTitle1 = 'I have to do this tang no. 1'
-        const itemTitle2 = 'I have to do this tang no. 2'
-        const itemTitle3 = 'I have to do this tang no. 3'
-        const itemIndexToMove = 3
+        const items = ['I have to do this tang no. 1', 'I have to do this tang no. 2', 'I have to do this tang no. 3']
+        const itemsString = items.join("{enter}")
+
+        const itemIndexToMove = Helpers.getRandomInt(0, items.length-1) // -1 since len returns from 1 to X
+        const indexToMoveTo = Helpers.getRandomInt(1, items.length)
 
         NavBar.goTo('List')
 
@@ -180,11 +206,11 @@ describe('Tasks Manipulation', function () {
         List.editList(listTitle)
        
         List.addListItem()
-        List.setListItemTitle(`${itemTitle1}{enter}${itemTitle2}{enter}${itemTitle3}`)
+        List.setListItemTitle(`${itemsString}`)
         List.confirmAddListItem()
 
-        List.dragItem(itemTitle2, itemIndexToMove)
+        List.dragItem(items[itemIndexToMove], indexToMoveTo)
 
-        expect(List.getItemRowByIndex(itemIndexToMove-1).invoke('val').should('equal', itemTitle2)) // index-1 since its handled as array, with index starting with 0
+        expect(List.getItemRowByIndex(indexToMoveTo-1).invoke('val').should('equal', items[itemIndexToMove])) // index-1 since its handled as array, with index starting with 0
     })
 })
