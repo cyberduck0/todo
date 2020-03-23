@@ -9,17 +9,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Install wait-on
-        run: npm install wait-on
+#      - name: Install wait-on
+#        run: npm install wait-on
 
       - name: Start GW
         working-directory: ./gateway
         run: yarn && yarn build && yarn start
 
       - name: Start Client
-        working-directory: ./client
-        wait-on: 'http://localhost:4001'
-        run: yarn && yarn start
+        with:
+          working-directory: ./client
+          wait-on: 'http://localhost:4001'
+          run: yarn && yarn start
 
       - name: Cypress tests
         uses: ./
