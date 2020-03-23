@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+
+  todo-app:
+    container_name: todo-app
+    build:
+      context: './client'
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+
+  todo-gateway:
+    container_name: todo-gateway
+    build:
+      context: './gateway'
+    volumes:
+        - './schema:/opt/schema' # GQL schema is used during runtime
+    environment:
+      PORT: 4001
+    ports:
+      - 4001:4001

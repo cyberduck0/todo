@@ -1,0 +1,20 @@
+.sortable {
+  &-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    &-drag {
+      cursor: grab;
+
+      &:active {
+        cursor: grabbing;
+      }
+    }
+
+    &-content {
+      display: flex;
+      flex: 1 1 auto;
+    }
+  }
+}

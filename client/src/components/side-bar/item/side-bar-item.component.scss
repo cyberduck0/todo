@@ -1,0 +1,19 @@
+@import 'src/assets/scss/colors';
+
+.side-bar-item {
+  padding: 1rem;
+  border-bottom: 1px solid #efefef;
+  display: flex;
+  justify-content: space-between;
+  transition: background-color .3s ease;
+  color: $text;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 300;
+
+  &:hover {
+    transition: background-color .3s ease;
+    background-color: $gray;
+    color: $lightGray;
+  }
+}

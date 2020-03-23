@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+//#options
+option java_multiple_files = true;
+option java_package = "com.fevo.todo.grpc";
+option java_outer_classname = "TodoProto";
+
+package todo;
+//#options
+
+//#services
+service TodoService {
+
+    rpc ListTodos (ListTodosRequest) returns (ListTodosResponse);
+
+    rpc ListTodoItems(ListTodoItemsRequest) returns (ListTodoItemsResponse);
+
+    rpc AddTodo (AddTodoRequest) returns (Id);
+
+    rpc RemoveTodo(Id) returns (Empty);
+
+    rpc EditTodoTitle(EditTodoTitleRequest) returns (Empty);
+
+    rpc EditTodoDescription(EditTodoDescriptionRequest) returns (Empty);
+
+    rpc AddTodoItem (AddTodoItemRequest) returns (Id);
+
+    rpc RemoveTodoItem(RemoveTodoItemRequest) returns (Empty);
+
+    rpc ToggleTodoItem(ToggleTodoItemRequest) returns (Empty);
+
+    rpc EditTodoItem(EditTodoItemContentRequest) returns (Empty);
+
+}
+//#services
+
+//#messages
+message Todo {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+}
+
+message TodoItem {
+    string id = 1;
+    string todoId = 2;
+    string content = 3;
+    bool done = 4;
+    int64 created = 5;
+}
+
+message Id {
+    string id = 1;
+}
+
+message Empty {
+}
+
+message ListTodosRequest {
+}
+
+message ListTodosResponse {
+    repeated Todo items = 1;
+}
+
+message ListTodoItemsRequest {
+    repeated string id = 1;
+}
+
+message ListTodoItemsResponse {
+    repeated TodoItem items = 1;
+}
+
+message AddTodoRequest {
+    string title = 1;
+}
+
+message EditTodoTitleRequest {
+    string id = 1;
+    string title = 2;
+}
+
+message EditTodoDescriptionRequest {
+    string id = 1;
+    string description = 2;
+}
+
+message AddTodoItemRequest {
+    string todoId = 1;
+    string content = 2;
+}
+
+message RemoveTodoItemRequest {
+    string todoId = 1;
+    string id = 2;
+}
+
+message ToggleTodoItemRequest {
+    string todoId = 1;
+    string id = 2;
+    bool done = 3;
+}
+
+message EditTodoItemContentRequest {
+    string todoId = 1;
+    string id = 2;
+    string content = 3;
+}
+//#messages

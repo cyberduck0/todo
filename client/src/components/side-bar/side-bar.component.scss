@@ -1,0 +1,9 @@
+@import 'src/assets/scss/colors';
+
+#app-sidebar {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid $border;
+  box-shadow: 0 0 5px -2px $black;
+  flex: 0 0 15rem;
+}

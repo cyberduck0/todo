@@ -1,0 +1,39 @@
+type Todo @key(fields: "id") {
+    id: ID!
+    title: String!
+    comment: String!
+    items: [TodoItem!]!
+}
+
+type TodoItem @key(fields: "id") {
+    id: ID!
+    todoId: ID!
+    content: String!
+    done: Boolean!
+    created: String!
+    index: Float!
+}
+
+extend type User @key(fields: "id") {
+    id: ID! @external
+    assignedTodos: [Todo!]!
+}
+
+type Query {
+    todo(id: String!): Todo
+    todos: [Todo!]!
+}
+
+type Mutation {
+    addTodo(title: String!, comment: String): Todo!
+    addTodoItem(todoId: String!, content: String!): TodoItem!
+    editTodo(id: String!, title: String, comment: String): Todo!
+    editTodoItem(todoId: String!, id: String!, content: String, done: Boolean, index: Float): TodoItem!
+    removeTodo(id: String!): Boolean
+    removeTodoItem(todoId: String!, id: String!): Boolean
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}

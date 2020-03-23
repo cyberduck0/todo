@@ -1,0 +1,17 @@
+overwrite: true
+generates:
+  ./src/generated/graphql/todos.d.ts:
+    schema: ../schema/todos.graphql
+    plugins:
+      - typescript
+      - typescript-resolvers
+    config:
+      federation: true
+  ./src/generated/graphql/users.d.ts:
+    schema: ../schema/users.graphql
+    plugins:
+      - typescript
+      - typescript-resolvers
+    config:
+      federation: true
+
