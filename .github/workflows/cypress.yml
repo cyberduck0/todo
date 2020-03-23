@@ -17,6 +17,7 @@ jobs:
         run: yarn && yarn build && yarn start
 
       - name: Start Client
+        uses: ./
         with:
           working-directory: ./client
           wait-on: 'http://localhost:4001'
