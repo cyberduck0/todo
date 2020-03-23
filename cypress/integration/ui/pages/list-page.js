@@ -9,14 +9,17 @@ export class List extends Page {
         this.addListButton.click()
     }
 
+
     static setListTitle(listTitle) {
         this.getListTitleInputField()
             .type(listTitle)
     }
 
+
     static confirmAddListModal() {
         this.confirmAddListButton.click()
     }
+
 
     static deleteAllLists() {
         this.deleteListButton.getButton()
@@ -32,52 +35,49 @@ export class List extends Page {
             })
     }
 
-    static getListSection(listTitle) {
+
+    static getListSectionByTitle(listTitle) {
         return cy.get(`[class="MuiCardContent-root"]>h3:contains("${listTitle}")`)
             .parent()
             .parent()
     }
 
+
     static deleteListModal(listTitle) {
-        this.getListSection(listTitle).within(() => {
+        this.getListSectionByTitle(listTitle).within(() => {
             this.deleteListButton.click()
         })
     }
+
 
     static confirmDeleteListModal() {
         this.confirmDeleteListButton.click()
     }
 
+
     static editList(listTitle) {
-        this.getListSection(listTitle).within(() => {
+        this.getListSectionByTitle(listTitle).within(() => {
             this.editListButton.click()
         })
     }
+
 
     static getListTitleInputField() {
         return this.taskTitleInput.getInputField()
     }
 
+
     static getListCommentInputField() {
         return this.editListCommentInput.getInputField()
     }
 
-    static getListTitleText() {
-        // TODO does not work
-        cy.get('label:contains("Title")~div>input').its('val').as('text')
-    }
-
-    static getListCommentText(text) {
-        // TODO does not work
-        cy.get('label:contains("Comment")~div>input').its('val').as('text')
-
-    }
-
+    
     static setNewListTitle(newTitle) {
         this.getListTitleInputField()
             .clear()
             .type(newTitle)
     }
+
 
     static setNewListComment(newComment) {
         this.getListCommentInputField()
@@ -85,20 +85,29 @@ export class List extends Page {
             .type(newComment)
     }
 
+
     static addListItem() {
         this.addTaskItemsButton.click()
     }
+
 
     static setListItemTitle(listItemTitle) {
         this.listItemTitleInput.getInputField()
             .type(listItemTitle)
     }
 
+
     static confirmAddListItem() {
         this.confirmAddTaskItemButton.click()
     }
 
-    static getItemSection(itemTitle) {
+
+    static getItemsTable() {
+        return cy.get(this.itemsTableSelector)
+    }
+
+
+    static getItemSectionByTitle(itemTitle) {
         return cy.get(`[class="todo-item-container"]>div>div>[value="${itemTitle}"]`)
             .parent()
             .parent()
@@ -107,27 +116,31 @@ export class List extends Page {
             .parent()
     }
 
+
     static changeItemTitle(oldTitle, newTitle) {
-        this.getItemSection(oldTitle).within(() => {
+        this.getItemSectionByTitle(oldTitle).within(() => {
             cy.get('div>input')
             .clear()
             .type(newTitle)
         })
     }
 
+
     static deleteItem(itemTitle) {
-        this.getItemSection(itemTitle).within(() => {
+        this.getItemSectionByTitle(itemTitle).within(() => {
             this.deleteItemButton.click()
         })
     }
 
+
     static dragItem(itemToDrag, rowIndex) {
-        this.getItemSection(itemToDrag).find(this.dragSelector) // what is dragged
+        this.getItemSectionByTitle(itemToDrag).find(this.dragSelector) // what is dragged
             .drag(`div.sortable-list > div:nth-child(${rowIndex})`) // where it's dropped
     }
 
-    static getRow(index) {
-        return cy.get(this.itemsSelector).eq(index)
+
+    static getItemRowByIndex(index) {
+        return cy.get(this.itemsRowsSelector).eq(index)
     }
 }
 
@@ -150,7 +163,9 @@ List.confirmAddTaskItemButton = new Button('span:contains("Add todo items")')
 List.deleteItemButton = new Button('[title="Remove item"]')
 
 List.dragSelector = '[class="sortable-item-drag"]'
-List.itemsSelector = '[class="todo-item-container"] > div [class="MuiInputBase-input MuiInput-input"]'
+List.itemsTableSelector = '[class="sortable-list"]'
+List.itemsRowsSelector = '[class="todo-item-container"] > div [class="MuiInputBase-input MuiInput-input"]'
+
 
 // modals selectors
 // List.addListModal = '[class="add-list-form"]'
