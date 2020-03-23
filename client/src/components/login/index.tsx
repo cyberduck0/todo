@@ -1,57 +1,57 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import ContentComponent from '../content/content.component';
-import { TextField, Button } from '@material-ui/core';
-import { UserAuthService } from '../../modules/services/user-auth.service';
 import './login.scss';
+import SignIn from './signIn/signIn';
+import SignUp from './signUp/signUp';
 
-export default class LoginComponent extends Component {
-  state = {
-    email: 'dude@gmail.com',
-    password: '1234',
-  };
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 
-  checkEmail() {
-    if (
-      this.state.email !== 'dude@gmail.com' ||
-      this.state.password !== '1234'
-    ) {
-      alert('Wrong password dude/et');
-    }
-    return (
-      this.state.email === 'dude@gmail.com' && this.state.password === '1234'
-    );
-  }
+const LoginComponent = () => {
+  const [showSignUp, setShowSignUp] = useState(false);
 
-  render() {
-    return (
-      <ContentComponent className='center'>
+  return (
+    <ContentComponent className='center'>
+      <Container component='main' maxWidth='xs'>
         <div className='login-form'>
-          <UserAuthService.Consumer>
-            {state => (
-              <form
-                onSubmit={evt => {
-                  evt.preventDefault();
-                  state.setState(this.checkEmail());
-                }}>
-                <TextField
-                  onChange={val => this.setState({ email: val.target.value })}
-                  value={this.state.email}
-                  label='Email'
-                />
-                <TextField
-                  type='password'
-                  value={this.state.password}
-                  onChange={val =>
-                    this.setState({ password: val.target.value })
-                  }
-                  label='Password'
-                />
-                <Button type='submit'>Submit</Button>
-              </form>
-            )}
-          </UserAuthService.Consumer>
+          {!showSignUp ? (
+            <>
+              <SignIn />
+              <Grid container={true} justify='center'>
+                <Grid item={true}>
+                  <Link
+                    href='#'
+                    variant='body2'
+                    onClick={() => {
+                      setShowSignUp(!showSignUp);
+                    }}>
+                    Don't have an account?
+                  </Link>
+                </Grid>
+              </Grid>
+            </>
+          ) : (
+            <>
+              <SignUp />
+              <Grid container={true} justify='center'>
+                <Grid item={true}>
+                  <Link
+                    href='#'
+                    variant='body2'
+                    onClick={() => {
+                      setShowSignUp(!showSignUp);
+                    }}>
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
+              </Grid>
+            </>
+          )}
         </div>
-      </ContentComponent>
-    );
-  }
-}
+      </Container>
+    </ContentComponent>
+  );
+};
+
+export default LoginComponent;

@@ -1,10 +1,10 @@
-import React from 'react';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
-import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
+import gql from 'graphql-tag';
+import React from 'react';
 import './add-list-modal.component.scss';
 
 const GET_LIST_ITEMS = gql`
@@ -50,12 +50,7 @@ export default function AddListModal() {
 
   return (
     <div className='modal-wrapper'>
-      <Button
-        onClick={handleOpen}
-        variant='contained'
-        color='primary'
-        className='add-button'
-        endIcon={<AddIcon />}>
+      <Button onClick={handleOpen} variant='contained' color='primary' className='add-button' endIcon={<AddIcon />}>
         Add List
       </Button>
       <Modal open={open} onClose={handleClose}>
@@ -78,23 +73,9 @@ export default function AddListModal() {
                 handleClose();
               }
             }}>
-            <TextField
-              label='Title'
-              fullWidth={true}
-              inputRef={titleInputRef}
-            />
-            <TextField
-              label='Comment'
-              multiline={true}
-              rows='5'
-              fullWidth={true}
-              inputRef={commentInputRef}
-            />
-            <Button
-              type='submit'
-              variant='contained'
-              color='primary'
-              className='submit-button'>
+            <TextField label='Title' fullWidth={true} inputRef={titleInputRef} />
+            <TextField label='Comment' multiline={true} rows='5' fullWidth={true} inputRef={commentInputRef} />
+            <Button type='submit' variant='contained' color='primary' className='submit-button'>
               Add Todo
             </Button>
           </form>

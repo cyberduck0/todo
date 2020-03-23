@@ -5,10 +5,6 @@ export default class ContentComponent extends Component<{
   className?: string;
 }> {
   render() {
-    return (
-      <div className={`content-container ${this.props.className}`}>
-        {this.props.children}
-      </div>
-    );
+    return <div className={`content-container ${this.props.className}`}>{this.props.children}</div>;
   }
 }

@@ -12,6 +12,8 @@ import { MockTodoService } from './src/service/mock-todo-service';
 
 (async function() {
 
+    const PORT = process.env.PORT || 4001;
+
     const todosGQLService: ServiceDefinition = {
         name: 'todos',
         typeDefs: gql(await importSchema(path.join(__dirname, "../schema/todos.graphql"))),
@@ -97,7 +99,7 @@ import { MockTodoService } from './src/service/mock-todo-service';
         playground: true,
     });
     
-    server.listen(4001).then(({ url }) => {
+    server.listen(PORT).then(({ url }) => {
         console.log(`Server ready at ${url}`);
     });
 

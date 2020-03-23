@@ -10,6 +10,17 @@
     "rules": {
       "prettier": true,
       "interface-name": false,
-      "jsx-no-lambda": false
+      "jsx-no-lambda": false,
+      "trailing-comma": true,
+      "semicolon": true,
+      "no-unused-expression": true,
+      "no-unused-variable": true,
+      "no-redundant-jsdoc": true,
+      "no-trailing-whitespace": true,
+      "no-duplicate-imports": true,
+      "ordered-imports": true,
+      "linebreak-style": [true, "LF"],
+      "max-line-length": [true, 200],
+      "unnecessary-else": [true, {"allow-else-if": true}]
     }
   }

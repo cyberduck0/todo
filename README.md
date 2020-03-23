@@ -1,4 +1,5 @@
 # Todo
+![CI Test](https://github.com/cyberduck1/todo/workflows/CI%20Test/badge.svg?branch=dev)
 
 This is a simple todo list app that includes the next tech stack
 

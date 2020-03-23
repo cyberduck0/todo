@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 import LoginComponent from './components/login';
-import UserAuthServiceContainer, {
-  UserAuthService,
-  UserAuthServiceModel,
-} from './modules/services/user-auth.service';
+import './index.scss';
+import UserAuthServiceContainer, { UserAuthService, UserAuthServiceModel } from './modules/services/user-auth.service';
+import * as serviceWorker from './serviceWorker';
 
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
