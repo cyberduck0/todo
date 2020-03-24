@@ -14,7 +14,7 @@ jobs:
 
       - name: Start GW
         working-directory: ./gateway
-        run: yarn && yarn run start:dev
+        run: yarn && yarn run start
 
       - name: Start Client
         uses: ./
