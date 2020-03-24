@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && mkdir -p ../public && cp public/index.html ../public/index.html",
     "test": "react-scripts test --coverage --no-watch --watch=false --watchAll=false --no-watchman --forceExit",
     "eject": "react-scripts eject",
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx} --format verbose",
