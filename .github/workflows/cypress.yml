@@ -14,14 +14,14 @@ jobs:
 
       - name: Start GW
         working-directory: ./gateway
-        run: yarn && yarn run start
+        run: yarn && yarn run start &
 
       - name: Start Client
         uses: ./
         with:
           working-directory: ./client
           wait-on: 'http://localhost:4001'
-          run: yarn && yarn start
+          run: yarn && yarn start &
 
       - name: Cypress tests
         uses: ./
